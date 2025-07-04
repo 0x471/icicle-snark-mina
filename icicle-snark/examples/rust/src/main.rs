@@ -5,7 +5,7 @@ const NUMBER_OF_ITERATIONS: usize = 5;
 
 fn main() {
     let mut cache_manager = CacheManager::default();
-    let base_path = "../../benchmark/rsa/";
+    let base_path = "../../benchmark/sha256/";
     let mut results = Vec::new();
 
     let witness = format!("{}witness.wtns", base_path);
@@ -13,7 +13,7 @@ fn main() {
     let proof = format!("{}proof.json", base_path);
     let public = format!("{}public.json", base_path);
     let vk = format!("{}verification_key.json", base_path);
-    let device = "CUDA";
+    let device = "CPU";
 
     let mut durations = Vec::new();
 
