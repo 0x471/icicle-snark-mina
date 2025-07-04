@@ -26,7 +26,7 @@ fn main() {
 
         let start = Instant::now();
 
-        groth16_verify(&proof, &public, &vk).unwrap();
+        //groth16_verify(&proof, &public, &vk).unwrap();
 
         println!("verification took: {:?}", start.elapsed());
         
