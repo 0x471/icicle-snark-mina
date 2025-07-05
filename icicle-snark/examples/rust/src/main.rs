@@ -5,7 +5,7 @@ const NUMBER_OF_ITERATIONS: usize = 5;
 
 fn main() {
     let mut cache_manager = CacheManager::default();
-    let base_path = "../../benchmark/sha256/";
+    let base_path = "../../benchmark/100k/";
     let mut results = Vec::new();
 
     let witness = format!("{}witness.wtns", base_path);
