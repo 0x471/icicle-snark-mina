@@ -10,7 +10,7 @@ const path = require('path');
 // USAGE:
 //   node convert_icicle_to_o1js_groth16.js
 //   
-// INPUT: Reads from ../icicle-snark/benchmark/sum_check/ (hardcoded)
+// INPUT: Reads from ../example_circuit/ (hardcoded)
 // OUTPUT: Writes to ./converted_circuit/ (hardcoded)
 //
 // PIPELINE:
@@ -22,9 +22,9 @@ const path = require('path');
 console.log('Converting circuit to o1js-blobstream format...\n');
 
 // Load original files
-const originalVK = JSON.parse(fs.readFileSync('../icicle-snark/benchmark/sum_check/verification_key.json', 'utf8'));
-const originalProof = JSON.parse(fs.readFileSync('../icicle-snark/benchmark/sum_check/proof.json', 'utf8'));
-const originalPublic = JSON.parse(fs.readFileSync('../icicle-snark/benchmark/sum_check/public.json', 'utf8'));
+const originalVK = JSON.parse(fs.readFileSync('../example_circuit/verification_key.json', 'utf8'));
+const originalProof = JSON.parse(fs.readFileSync('../example_circuit/proof.json', 'utf8'));
+const originalPublic = JSON.parse(fs.readFileSync('../example_circuit/public.json', 'utf8'));
 
 console.log('Original files loaded:');
 console.log(`  - VK: ${originalVK.IC.length} IC points, nPublic: ${originalVK.nPublic}`);
