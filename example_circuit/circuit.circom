@@ -1,23 +1,25 @@
 pragma circom 2.1.6;
 
-template ComplexCircuit(NUM_VARIABLES, NUM_CONSTRAINTS) {
+template SumCheck() {
+    // 5 public inputs
     signal input a;
-    signal output c;
+    signal input b;
+    signal input c;
+    signal input d;
+    signal input e;
 
-    assert(NUM_VARIABLES <= NUM_CONSTRAINTS);
+    // Calculate the sum
+    signal sum;
+    sum <== a + b + c + d + e;
 
-    signal b[NUM_VARIABLES];
+    // Enforce sum == 100
+    sum === 100;
 
-    b[0] <== a*a;
-    var i;
-    for (i = 1; i < NUM_VARIABLES; i++) {
-        b[i] <== b[i-1]*b[i-1];
-    }
-    i = i-1;
-    for (var j = NUM_VARIABLES; j < NUM_CONSTRAINTS; j++) {
-        b[i] === b[i-1]*b[i-1];
-    }
-    c <== b[i];
+    // Add dummy constraints to increase circuit size
+    signal dummy1;
+    signal dummy2;
+    dummy1 <== a * b;
+    dummy2 <== c * d;
 }
 
-component main = ComplexCircuit(100000, 100000);
+component main {public [a, b, c, d, e]} = SumCheck(); 
