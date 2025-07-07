@@ -3,13 +3,14 @@ const path = require('path');
 
 // This script converts icicle-snark/snarkjs Groth16 format to o1js-blobstream format:
 // - Proof: pi_a/pi_b/pi_c → negA/B/C format (negates pi_a.y coordinate)
-// - VK: Flattens nested arrays, converts IC points to array format
-// - Handles variable number of public inputs (it should be maximum 5 because it's hardcoded in the conversion script for Risc0)
+// - VK: Flattens nested arrays, converts IC points to ic0, ic1, ic2, ... format
+// - Converts public inputs to pi1, pi2, pi3, ... format for o1js-blobstream
+// - Handles variable number of public inputs dynamically
 //
 // USAGE:
 //   node convert_icicle_to_o1js_groth16.js
 //   
-// INPUT: Reads from ../example_circuit/ (hardcoded)
+// INPUT: Reads from ../icicle-snark/benchmark/sum_check/ (hardcoded)
 // OUTPUT: Writes to ./converted_circuit/ (hardcoded)
 //
 // PIPELINE:
@@ -21,9 +22,9 @@ const path = require('path');
 console.log('Converting circuit to o1js-blobstream format...\n');
 
 // Load original files
-const originalVK = JSON.parse(fs.readFileSync('../example_circuit/verification_key.json', 'utf8'));
-const originalProof = JSON.parse(fs.readFileSync('../example_circuit/proof.json', 'utf8'));
-const originalPublic = JSON.parse(fs.readFileSync('../example_circuit/public.json', 'utf8'));
+const originalVK = JSON.parse(fs.readFileSync('../icicle-snark/benchmark/sum_check/verification_key.json', 'utf8'));
+const originalProof = JSON.parse(fs.readFileSync('../icicle-snark/benchmark/sum_check/proof.json', 'utf8'));
+const originalPublic = JSON.parse(fs.readFileSync('../icicle-snark/benchmark/sum_check/public.json', 'utf8'));
 
 console.log('Original files loaded:');
 console.log(`  - VK: ${originalVK.IC.length} IC points, nPublic: ${originalVK.nPublic}`);
@@ -68,15 +69,18 @@ function convertProof() {
         y: originalProof.pi_c[1]
     };
     
-    // Use actual public inputs
-    const pi = originalPublic;
+    // Use actual public inputs - convert to pi1, pi2, ... format for o1js-blobstream
+    const piFields = {};
+    originalPublic.forEach((val, idx) => {
+        piFields[`pi${idx + 1}`] = val;
+    });
     
-    const convertedProof = { negA, B, C, pi };
+    const convertedProof = { negA, B, C, ...piFields };
     
     console.log(`negA: (${negA.x.slice(0,20)}..., ${negA.y.slice(0,20)}...)`);
     console.log(`B: G2 point with 4 coordinates`);
     console.log(`C: (${C.x.slice(0,20)}..., ${C.y.slice(0,20)}...)`);
-    console.log(`pi: ${pi.length} public inputs\n`);
+    console.log(`pi1-pi${originalPublic.length}: ${originalPublic.length} public inputs\n`);
     
     return convertedProof;
 }
@@ -111,11 +115,14 @@ function convertVK() {
         y_c1: originalVK.vk_delta_2[1][1]
     };
     
-    // Convert IC points to dynamic array
-    const ic = originalVK.IC.map(point => ({
-        x: point[0],
-        y: point[1]
-    }));
+    // Convert IC points to ic0, ic1, ic2, ... format for o1js-blobstream
+    const icFields = {};
+    originalVK.IC.forEach((point, idx) => {
+        icFields[`ic${idx}`] = {
+            x: point[0],
+            y: point[1]
+        };
+    });
     
     // Convert alpha_beta from original VK's vk_alphabeta_12 format
     function flattenFp12(alphabeta12) {
@@ -132,7 +139,7 @@ function convertVK() {
     
     const alpha_beta = flattenFp12(originalVK.vk_alphabeta_12);
     
-    // w27 (default value - same as `../contracts/src/groth/example_jsons/vk.json`)
+    // todo: update w27 (currently it's default value - same as `../contracts/src/groth/example_jsons/vk.json`)
     const w27 = {
         g00: "0", g01: "0", g10: "0", g11: "0",
         g20: "8204864362109909869166472767738877274689483185363591877943943203703805152849",
@@ -140,13 +147,13 @@ function convertVK() {
         h00: "0", h01: "0", h10: "0", h11: "0", h20: "0", h21: "0"
     };
     
-    const convertedVK = { alpha, beta, gamma, delta, ic, alpha_beta, w27 };
+    const convertedVK = { alpha, beta, gamma, delta, ...icFields, alpha_beta, w27 };
     
     console.log(`alpha: (${alpha.x.slice(0,20)}..., ${alpha.y.slice(0,20)}...)`);
     console.log(`beta: G2 point`);
     console.log(`gamma: G2 point`);
     console.log(`delta: G2 point`);
-    console.log(`ic: ${ic.length} points`);
+    console.log(`ic0-ic${originalVK.IC.length - 1}: ${originalVK.IC.length} points`);
     console.log(`alpha_beta: Fp12 from original VK`);
     console.log(`w27: Default value\n`);
     
