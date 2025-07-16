@@ -5,7 +5,7 @@ const NUMBER_OF_ITERATIONS: usize = 5;
 
 fn main() {
     let mut cache_manager = CacheManager::default();
-    let base_path = "../../benchmark/sum_check/";
+    let base_path = "../../benchmark/poly_eval/";
     let mut results = Vec::new();
 
     let witness = format!("{}witness.wtns", base_path);
