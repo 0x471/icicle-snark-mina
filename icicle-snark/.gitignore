@@ -23,6 +23,7 @@
 proof.json
 public.json
 verification_key.json
+vk.json
 *.wtns
 **/node_modules
 *_js
