@@ -6,8 +6,8 @@ source ${ENV}
 
 cd ./contracts
 
-WORK_DIR_RELATIVE_TO_SCRIPTS="../scripts/${WORK_DIR}"
-CACHE_DIR_RELATIVE_TO_SCRIPTS="../scripts/${CACHE_DIR}"
+WORK_DIR_RELATIVE_TO_SCRIPTS="../${WORK_DIR}"
+CACHE_DIR_RELATIVE_TO_SCRIPTS="../${CACHE_DIR}"
 AUX_WITNESS_RELATIVE_PATH="$(realpath ${WORK_DIR_RELATIVE_TO_SCRIPTS})/aux_wtns.json"
 
 
@@ -41,7 +41,7 @@ MAX_ITERATIONS=$(( (16 + $MAX_THREADS - 1)/$MAX_THREADS ))
 TOTAL_IN_LOOP=16
 SHOULD_BREAK=false
 
-export GROTH16_VK_PATH=${VK_PATH}
+export GROTH16_VK_PATH=../${VK_PATH}
 
 echo "Computing ZKPs 0-15..."
 for i in `seq 0 $MAX_ITERATIONS`; do
@@ -54,7 +54,7 @@ for i in `seq 0 $MAX_ITERATIONS`; do
       break
     fi
     # echo "Computing ZKP ${ZKP_I}..."
-    node ./build/src/groth/recursion/prove_zkps.js zkp${ZKP_I} $PROOF_PATH $AUX_WITNESS_RELATIVE_PATH ${WORK_DIR_RELATIVE_TO_SCRIPTS} ${CACHE_DIR_RELATIVE_TO_SCRIPTS} &
+    node ./build/src/groth/recursion/prove_zkps.js zkp${ZKP_I} ../$PROOF_PATH $AUX_WITNESS_RELATIVE_PATH ${WORK_DIR_RELATIVE_TO_SCRIPTS} ${CACHE_DIR_RELATIVE_TO_SCRIPTS} &
   done
   wait
   if $SHOULD_BREAK; then

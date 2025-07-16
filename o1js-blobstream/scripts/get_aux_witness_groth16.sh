@@ -6,7 +6,7 @@ args=("$@")
 ENV=${args[0]}
 source ${ENV}
 
-WORK_DIR_RELATIVE_TO_SCRIPTS="./scripts/${WORK_DIR}"
+WORK_DIR_RELATIVE_TO_SCRIPTS="${WORK_DIR}"
 MLO_RELATIVE_PATH="$(realpath ${WORK_DIR_RELATIVE_TO_SCRIPTS})/mlo.json"
 rm -f $MLO_RELATIVE_PATH
 AUX_WITNESS_RELATIVE_PATH="$(realpath ${WORK_DIR_RELATIVE_TO_SCRIPTS})/aux_wtns.json"
@@ -17,8 +17,8 @@ NODE_SCRIPT="./build/src/groth/serialize_mlo.js"
 
 # obtain mlo result
 
-export GROTH16_VK_PATH=${VK_PATH}
-node $NODE_SCRIPT $VK_PATH $PROOF_PATH $MLO_RELATIVE_PATH &
+export GROTH16_VK_PATH=../$VK_PATH
+node $NODE_SCRIPT ../$VK_PATH ../$PROOF_PATH $MLO_RELATIVE_PATH &
 
 node_pid=$!
 wait $node_pid
