@@ -1,2 +1,2 @@
 
-cargo run -- icicle-snark/benchmark/poly_eval/proof.json icicle-snark/benchmark/poly_eval/public.json icicle-snark/benchmark/poly_eval/verification_key.json poly_eval_converted/proof.json poly_eval_converted/vk.json
+cargo run -- icicle-snark/benchmark/poly_eval/proof.json icicle-snark/benchmark/poly_eval/public.json icicle-snark/benchmark/poly_eval/verification_key.json o1js-blobstream/poly_eval_converted/proof.json o1js-blobstream/poly_eval_converted/vk.json
