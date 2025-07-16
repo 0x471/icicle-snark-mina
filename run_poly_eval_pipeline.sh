@@ -46,7 +46,7 @@ echo "🔐 Step 1b: Building icicle-snark and generating proof..."
 
 # Run the proof generation using cargo run
 echo "🔄 Generating proof..."
-cd examples/rust
+cd ../../examples/rust
 cargo run --release
 
 # Verify proof was generated
