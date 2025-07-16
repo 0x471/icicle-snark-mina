@@ -198,7 +198,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "Usage: {} <proof.json> <public.json> <vk.json> <output_proof.json> <output_vk.json>",
             args[0]
         );
-        eprintln!("Example: {} proof.json public.json verification_key.json ../o1js-blobstream/converted_circuit/proof.json ../o1js-blobstream/converted_circuit/vk.json", args[0]);
+        eprintln!("Example: {} proof.json public.json vk.json converted_proof.json converted_vk.json", args[0]);
         std::process::exit(1);
     }
 
