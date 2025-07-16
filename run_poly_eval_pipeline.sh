@@ -39,11 +39,6 @@ echo "✅ Generated circuit files: circuit_final.zkey, witness.wtns, verificatio
 # Step 1b: Build icicle-snark and generate proof using the Rust example (examples/rust/src/main.rs)
 echo "🔐 Step 1b: Building icicle-snark and generating proof..."
 
-# # Build icicle-snark from root
-# echo "🔨 Building icicle-snark..."
-# cd ../..
-# cargo build --release
-
 # Run the proof generation using cargo run
 echo "🔄 Generating proof..."
 cd ../../examples/rust
