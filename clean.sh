@@ -132,9 +132,7 @@ cleanup_generated_files() {
     echo "   - Blobstream build artifacts (build/, node_modules/)"
     echo "   - Blobstream work directories and files (mlo.json, aux_wtns.json, etc.)"
     echo "   - All generated proof directories (proofs/, vks/, cache/)"
-    echo "   - Generated environment files (env.generated*)"
     echo "   - Temporary files (*.tmp, *.log, *.cache)"
-    echo "   - package-lock.json (preserved for dependency consistency)"
     echo ""
     echo "🎉 Repository is now in a completely fresh state!"
 }
