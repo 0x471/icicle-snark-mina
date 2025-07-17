@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 async function main() {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  const workDir = path.resolve(__dirname, '../../poly_eval_converted/flow');
+  const workDir = path.resolve(__dirname, '../../../../poly_eval_converted/flow');
   process.env.POLY_EVAL_WORK_DIR = workDir;
 
   console.log('🔧 Compiling polyEvalVerifier ZkProgram...');
