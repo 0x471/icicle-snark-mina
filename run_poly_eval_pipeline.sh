@@ -107,18 +107,18 @@ if [ ! -d "contracts/build" ]; then
     cd ..
 fi
 
-# Step 4a: Get aux witness
-echo "🔍 Step 4a: Getting aux witness..."
-./scripts/get_aux_witness_groth16.sh scripts/env.poly_eval
+# # Step 4a: Get aux witness
+# echo "🔍 Step 4a: Getting aux witness..."
+# ./scripts/get_aux_witness_groth16.sh scripts/env.poly_eval
 
-# Step 4b: Run groth16_tree for recursion
-echo "🌳 Step 4b: Running groth16_tree..."
-./scripts/groth16_tree.sh scripts/env.poly_eval
+# # Step 4b: Run groth16_tree for recursion
+# echo "🌳 Step 4b: Running groth16_tree..."
+# ./scripts/groth16_tree.sh scripts/env.poly_eval
 
 echo "🛡️  Step 5: Running zkApp verification..."
-cd o1js-blobstream/contracts
+cd contracts
 node build/src/poly_eval_zkapp/run.js
-cd ../..
+cd ..
 
 echo "🎉 Pipeline completed successfully!"
 echo ""
