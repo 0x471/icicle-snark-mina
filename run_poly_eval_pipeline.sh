@@ -192,7 +192,15 @@ main() {
         log_info "Contracts already built"
     fi
     
-    # Step 9: Run verification
+    # Step 9a: Get aux witness
+    log_info "Getting aux witness..."
+    ./scripts/get_aux_witness_groth16.sh scripts/env.poly_eval
+    
+    # Step 9b: Run groth16_tree for recursion
+    log_info "Running groth16_tree for recursion..."
+    ./scripts/groth16_tree.sh scripts/env.poly_eval
+    
+    # Step 10: Run verification
     log_info "Running zkApp verification..."
     cd contracts
     node build/src/poly_eval_zkapp/run.js
@@ -211,5 +219,29 @@ main() {
     echo "You can now verify the proofs!"
 }
 
+<<<<<<< HEAD
 # Run main function
 main "$@"
+=======
+# Step 4a: Get aux witness
+echo "🔍 Step 4a: Getting aux witness..."
+./scripts/get_aux_witness_groth16.sh scripts/env.poly_eval
+
+# Step 4b: Run groth16_tree for recursion
+echo "🌳 Step 4b: Running groth16_tree..."
+./scripts/groth16_tree.sh scripts/env.poly_eval
+
+echo "🛡️  Step 5: Running zkApp verification..."
+cd contracts
+node build/src/poly_eval_zkapp/run.js
+cd ..
+
+echo "🎉 Pipeline completed successfully!"
+echo ""
+echo "📁 Output files:"
+echo "   - Converted proof: $PROOF_PATH"
+echo "   - Converted VK: $VK_PATH"
+echo "   - Generated proofs in: $WORK_DIR"
+echo ""
+echo "You can now verify the proofs!"
+>>>>>>> c4086fafce6339087dce5f78698687e44482c176
