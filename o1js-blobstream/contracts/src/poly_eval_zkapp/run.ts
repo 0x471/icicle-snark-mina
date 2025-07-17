@@ -5,7 +5,7 @@ import fs from 'fs';
 import path from 'path';
 
 async function main() {
-  const workDir = path.resolve(process.cwd(), '../poly_eval_converted/flow');
+  const workDir = path.resolve(__dirname, '../../poly_eval_converted/flow');
   process.env.POLY_EVAL_WORK_DIR = workDir;
 
   console.log('🔧 Compiling polyEvalVerifier ZkProgram...');

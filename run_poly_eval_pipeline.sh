@@ -116,7 +116,9 @@ echo "🌳 Step 4b: Running groth16_tree..."
 ./scripts/groth16_tree.sh scripts/env.poly_eval
 
 echo "🛡️  Step 5: Running zkApp verification..."
-node ./contracts/build/src/poly_eval_zkapp/run.js
+cd o1js-blobstream/contracts
+node build/src/poly_eval_zkapp/run.js
+cd ../..
 
 echo "🎉 Pipeline completed successfully!"
 echo ""
