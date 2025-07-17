@@ -3,8 +3,11 @@ import { PolyEvalZkApp, polyEvalVerifier } from './poly_eval_verifier.js';
 import { NodeProofLeft } from '../structs.js';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 async function main() {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
   const workDir = path.resolve(__dirname, '../../poly_eval_converted/flow');
   process.env.POLY_EVAL_WORK_DIR = workDir;
 
